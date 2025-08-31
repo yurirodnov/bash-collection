@@ -29,9 +29,9 @@ read -p "> " ANSWER
 
 if [[ "$ANSWER" -eq 1 ]]; then
 	echo -e "$CAT"
-elif [[ $ANSWER -eq 2 ]]; then
+elif [[ "$ANSWER" -eq 2 ]]; then
 	echo -e "$DOG"
-elif [[ $ANSWER -eq 3 ]]; then
+elif [[ "$ANSWER" -eq 3 ]]; then
 	echo -e "$BIRD"
 else
 	echo "Invalid choise"
