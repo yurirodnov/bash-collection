@@ -18,9 +18,8 @@ echo "Hostname: $(hostname)"
 echo "Operational system: $(grep PRETTY_NAME /etc/os-release | cut -d= -f2)"
 echo "Distributive code name: $(grep VERSION_CODENAME /etc/os-release | cut -d= -f2)"
 echo "Kernel: $(uname -r)"
-echo "Architecture: $(lscpu | grep 'Architecture: ' | cut -b 39-)"
 echo "Virtualization: "
-echo "Uptime: "
+echo "Uptime: $(uptime -p | cut -b4-)"
 echo "Load average: "
 
 
@@ -28,6 +27,7 @@ echo -e "\n"
 echo $LINES
 echo "Hardware"
 echo $LINES
+echo "Architecture: $(lscpu | grep 'Architecture: ' | cut -b 39-)"
 echo "CPU model name: $(lscpu | grep 'Model name: ' | cut -b 39-)"
 echo "CPU units available: $(nproc --all)"
 
