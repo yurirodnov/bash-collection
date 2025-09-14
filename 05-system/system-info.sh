@@ -8,9 +8,9 @@
 # ====================================
 
 
-LINES="--------------------"
+LINES="-------------------------------------"
 
-echo $LINES
+#echo $LINES
 echo "System"
 echo $LINES
 
@@ -18,36 +18,38 @@ echo "Hostname: $(hostname)"
 echo "Operational system: $(grep PRETTY_NAME /etc/os-release | cut -d= -f2)"
 echo "Distributive code name: $(grep VERSION_CODENAME /etc/os-release | cut -d= -f2)"
 echo "Kernel: $(uname -r)"
-echo "Virtualization: "
+echo "Architecture: $(uname -m)"
+echo "Virtualization: $(systemd-detect-virt)"
 echo "Uptime: $(uptime -p | cut -b4-)"
-echo "Load average: "
+echo "Load average last 1, 5, 15 min: $(uptime | grep 'load average:' | sed 's/.*: *//') "
 
 
-echo -e "\n"
-echo $LINES
+echo
+#echo $LINES
 echo "Hardware"
 echo $LINES
-echo "Architecture: $(lscpu | grep 'Architecture: ' | cut -b 39-)"
-echo "CPU model name: $(lscpu | grep 'Model name: ' | cut -b 39-)"
-echo "CPU units available: $(nproc --all)"
+echo "CPU model name: $(lscpu | grep 'Model name:' | sed 's/.*: *//')"
+echo "CPU units available: $(nproc)"
+echo "RAM total/used/free: $(free -h | awk '/^Mem:/ {print $2,$3,$4 }')"
+echo "Swap total/used/free: $(free -h | awk '/^Swap:/ {print $2,$3,$4}')"
+echo "Disk space(/) total/used/free: $(df -h | awk '$6 == "/" {print $2,$3,$4}')"
 
 
-
-echo -e "\n"
-echo $LINES
+echo
+#echo $LINES
 echo "Network"
 echo $LINES
 
-echo -e "\n"
-echo $LINES
+echo
+#echo $LINES
 echo "Users and security"
 echo $LINES
 
 echo "Current user: $(whoami)"
 echo "Users logged-in: $(who)"
 
-echo -e "\n"
-echo $LINES
+echo
+#echo $LINES
 echo "Another info"
 echo $LINES
 
