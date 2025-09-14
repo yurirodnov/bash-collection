@@ -9,6 +9,8 @@
 
 
 LINES="-------------------------------------"
+MAIN_INTERFACE=$(ip route | grep default | awk '{print $5}')
+
 
 #echo $LINES
 echo "System"
@@ -23,7 +25,6 @@ echo "Virtualization: $(systemd-detect-virt)"
 echo "Uptime: $(uptime -p | cut -b4-)"
 echo "Load average last 1, 5, 15 min: $(uptime | grep 'load average:' | sed 's/.*: *//') "
 
-
 echo
 #echo $LINES
 echo "Hardware"
@@ -34,11 +35,11 @@ echo "RAM total/used/free: $(free -h | awk '/^Mem:/ {print $2,$3,$4 }')"
 echo "Swap total/used/free: $(free -h | awk '/^Swap:/ {print $2,$3,$4}')"
 echo "Disk space(/) total/used/free: $(df -h | awk '$6 == "/" {print $2,$3,$4}')"
 
-
 echo
 #echo $LINES
 echo "Network"
 echo $LINES
+echo "MAC-address: $(ip a show "$MAIN_INTERFACE" | awk '/link\/ether/ {print $2}')" 
 
 echo
 #echo $LINES
