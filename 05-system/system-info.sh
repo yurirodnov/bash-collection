@@ -40,6 +40,8 @@ echo
 echo "Network"
 echo $LINES
 echo "MAC-address: $(ip a show "$MAIN_INTERFACE" | awk '/link\/ether/ {print $2}')" 
+echo "External IP: $(curl -s ifconfig.me 2>/dev/null || echo "Offline")"
+
 
 echo
 #echo $LINES
@@ -53,4 +55,6 @@ echo
 #echo $LINES
 echo "Another info"
 echo $LINES
+
+echo "Timezone: $(timedatectl | grep 'Time zone:' | awk '{print $3}')"
 
