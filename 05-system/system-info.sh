@@ -23,20 +23,30 @@ for pm in apt dnf yum pacman zypper apk dpkg rpm; do
 done
 
 
+HOSTNAME=$(hostname)
+OS=$(grep PRETTY_NAME /etc/os-release | cut -d= -f2 2>/dev/null)
+DSTR_CODE_NAME=$(grep VERSION_CODENAME /etc/os-release 2>/dev/null | cut -d= -f2)
+KERNEL=$(uname -r)
+ARCH=$(uname -m)
+VIRT=$(systemd-detect-virt)
+UPTIME=$(uptime -p 2>/dev/null | cut -b4-)
+AVG_LOAD=$(uptime | grep 'load average:' | sed 's/.*: *//' 2>/dev/null)
+
+
 #echo $LINES
 echo
 echo "System"
 echo $LINES
 
-echo "Hostname: $(hostname)"
-echo "Operational system: $(grep PRETTY_NAME /etc/os-release | cut -d= -f2)"
-echo "Distributive code name: $(grep VERSION_CODENAME /etc/os-release | cut -d= -f2)"
-echo "Package manager: $PCKG_MGR"
-echo "Kernel: $(uname -r)"
-echo "Architecture: $(uname -m)"
-echo "Virtualization: $(systemd-detect-virt)"
-echo "Uptime: $(uptime -p | cut -b4-)"
-echo "Load average last 1, 5, 15 min: $(uptime | grep 'load average:' | sed 's/.*: *//') "
+echo "Hostname: ${HOSTNAME:-No data}"
+echo "Operational system: ${OS:-No data}"
+echo "Distributive code name: ${DSTR_CODE_NAME:-No data}"
+echo "Package manager: ${PCKG_MGR:-No data}"
+echo "Kernel: ${KERNEL:-No data}"
+echo "Architecture: ${ARCH:-No data}"
+echo "Virtualization: ${VIRT:-No data}"
+echo "Uptime: ${UPTIME:-No data}"
+echo "Average load last 1, 5, 15 min: ${AVG_LOAD:-No data}"
 
 echo
 #echo $LINES
